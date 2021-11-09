@@ -46,11 +46,12 @@ void mmap_close(struct vm_area_struct *vma)
 	info->reference--;
 }
 
-static int mmap_fault(struct vm_area_struct *vma, struct vm_fault *vmf)
+static vm_fault_t mmap_fault(struct vm_fault *vmf)
 {
 	struct page *page;
 	struct mmap_info *info;
-
+	struct vm_area_struct *vma = vmf->vma;
+	
 	info = (struct mmap_info *)vma->vm_private_data;
 	if (!info->data) {
 		printk("No data\n");
